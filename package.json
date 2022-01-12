@@ -1,0 +1,11 @@
+{
+  "name": "PomodoroBot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:Claudio-P/PomodoroBot.git",
+  "author": "Claudio-P <pclaudio435@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^13.5.1"
+  }
+}

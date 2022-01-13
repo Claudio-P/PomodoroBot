@@ -7,5 +7,8 @@
   "license": "MIT",
   "dependencies": {
     "discord.js": "^13.5.1"
+  },
+  "devDependencies": {
+    "dotenv": "^11.0.0"
   }
 }

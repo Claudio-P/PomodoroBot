@@ -6,6 +6,14 @@
   "author": "Claudio-P <pclaudio435@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "discord.js": "^13.5.1"
+    "discord.js": "^13.5.1",
+    "global": "^4.4.0",
+    "nodemon": "^2.0.15"
+  },
+  "devDependencies": {
+    "dotenv": "^11.0.0"
+  },
+  "scripts": {
+    "start": "nodemon ./bot.js"
   }
 }

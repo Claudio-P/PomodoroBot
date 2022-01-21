@@ -1,11 +1,9 @@
 const { Client, Intents } = require('discord.js');
-const { timeout } = require('nodemon/lib/config');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.DIRECT_MESSAGES] });
+const MINUTE = 60000
 require('dotenv').config();
 
 const token = process.env.CLIENT_TOKEN;
-
-
 
 function firstCommand(message) {
     const command = message.content.split(" ")
@@ -14,7 +12,7 @@ function firstCommand(message) {
 
 function timeOut(ms) {
     return new Promise(resolve => {
-        setTimeout(resolve, ms * 60000)
+        setTimeout(resolve, ms * MINUTE)
     })
 }
 
@@ -26,10 +24,8 @@ function muteAllChannel(message, isMute) {
     })
 }
 
-async function time(message, ms, botMessage) {
-    await timeOut(ms).then(() => {
-        message.channel.send(`🍅 ${botMessage}`)
-    })
+async function time(message, ms) {
+    await timeOut(ms)
 }
 
 async function startPomodoro(message) {
@@ -42,13 +38,23 @@ async function startPomodoro(message) {
     const pomodoroRest = convertedContent[3];
 
     message.reply(`⏲️ **Start Pomodoro!** \n🔄 **Você iniciou um Ciclo de ${pomodoroQuantity} Pomodoro** \n🕐 **Com uma duração de ${pomodoroTime}:00 min (_Cada Ciclo_)** \n🕐 **Seus intervalos de descanso são de ${pomodoroRest}:00 min**`);
+    
+    let i = 0
 
-    for (let i = 0; i < pomodoroQuantity; i++) {
+    do {
+        i++
         muteAllChannel(message, true)
-        await time(message, parseInt(pomodoroTime), `**Descanso merecido! Você terá 🕐 ${pomodoroRest}min para descansar** 🥱`)
+        message.reply(`🍅 **Pomodoro Iniciado. 🕐 ${pomodoroTime}min para finalizar o Ciclo** 🏁`)
+        await time(message, parseInt(pomodoroRest))
         muteAllChannel(message, false)
-        await time(message, parseInt(pomodoroRest), `**Vamos voltar. Temos mais um POMODORO de 🕐 ${pomodoroTime}min ** 🏁`)
-    }
+        if (i == pomodoroQuantity) {
+            break;
+        }
+        message.reply(`🍅 **Descanso merecido! Você terá 🕐 ${pomodoroRest}min para descansar** 🥱`)
+        await time(message, parseInt(pomodoroTime))
+    } while (i < pomodoroQuantity)
+
+    message.reply("🎉 **Parabéns!!!** ✨ Você concluiu seu 🍅 **POMODORO** 🔥")
     console.log("Ended")
 }
 
@@ -62,17 +68,18 @@ client.on('messageCreate', async message => {
 
     const { voice } = message.member
 
-    if (!voice.channelId) {
-        // FIX: SE O USUÁRIO NÃO ESTIVER EM UM CANAL DE VOZ, ELE NÃO IRÁ CONSEGUIR ACIONAR O BOT
-        message.channel.send('Você deve estar em canal de Voz')
-    } else {
-        switch (command) {
-            case '!start':
-                startPomodoro(message)
-                break;
-        }
+    // if (!voice.channelId) {
+    //     // FIX: SE O USUÁRIO NÃO ESTIVER EM UM CANAL DE VOZ, ELE NÃO IRÁ CONSEGUIR ACIONAR O BOT
+    //     message.reply('🚫 Você deve estar em canal de Voz 🗣️')
+    // } else {
+        
+    // }
+
+    switch (command) {
+        case '!start':
+            startPomodoro(message)
+            break;
     }
-    
 });
 
 client.login(token);

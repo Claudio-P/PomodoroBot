@@ -5,6 +5,8 @@ require('dotenv').config();
 
 const token = process.env.CLIENT_TOKEN;
 
+
+
 function firstCommand(message) {
     const command = message.content.split(" ")
     return command[0]
@@ -13,6 +15,14 @@ function firstCommand(message) {
 function timeOut(ms) {
     return new Promise(resolve => {
         setTimeout(resolve, ms * 60000)
+    })
+}
+
+function muteAllChannel(message, isMute) {
+    const { voice } = message.member
+
+    voice.channel.members.map(user => {
+        user.voice.setMute(isMute, "")
     })
 }
 
@@ -34,13 +44,12 @@ async function startPomodoro(message) {
     message.reply(`⏲️ **Start Pomodoro!** \n🔄 **Você iniciou um Ciclo de ${pomodoroQuantity} Pomodoro** \n🕐 **Com uma duração de ${pomodoroTime}:00 min (_Cada Ciclo_)** \n🕐 **Seus intervalos de descanso são de ${pomodoroRest}:00 min**`);
 
     for (let i = 0; i < pomodoroQuantity; i++) {
-        await time(message, parseInt(pomodoroTime), "**Descanso** 🥱")
-        await time(message, parseInt(pomodoroRest), "**Iniciando novamente** 🏁")
+        muteAllChannel(message, true)
+        await time(message, parseInt(pomodoroTime), `**Descanso merecido! Você terá 🕐 ${pomodoroRest}min para descansar** 🥱`)
+        muteAllChannel(message, false)
+        await time(message, parseInt(pomodoroRest), `**Vamos voltar. Temos mais um POMODORO de 🕐 ${pomodoroTime}min ** 🏁`)
     }
-
-    
     console.log("Ended")
-
 }
 
 
@@ -50,12 +59,20 @@ client.once('ready', () => {
 
 client.on('messageCreate', async message => {
     const command = firstCommand(message)
-    
-    switch (command) {
-        case '!start':
-            startPomodoro(message)
-            break;
+
+    const { voice } = message.member
+
+    if (!voice.channelId) {
+        // FIX: SE O USUÁRIO NÃO ESTIVER EM UM CANAL DE VOZ, ELE NÃO IRÁ CONSEGUIR ACIONAR O BOT
+        message.channel.send('Você deve estar em canal de Voz')
+    } else {
+        switch (command) {
+            case '!start':
+                startPomodoro(message)
+                break;
+        }
     }
+    
 });
 
 client.login(token);

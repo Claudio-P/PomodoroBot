@@ -91,8 +91,8 @@ client.on('messageCreate', async message => {
             channelMessage("ℹ️ Nossos commandos 👇")
             channelMessage("**!start _<cliclos> <minutos dos ciclos> <minuto do descanso>_ Ex: !start _2 1 1_** \n**!contribuidores** - _Informações dos contribuidores e do projeto_")
             break;
-        case '!contribuidores':
-            channelMessage("**💾 Link do Repositório Github** https://github.com/Claudio-P/PomodoroBot \n **👨‍🦱 Claudio Pereira.** https://github.com/Claudio-P \n **👨‍🦰 Gabriel Silva.** https://github.com/gabriel-anjos \n **👨‍🦱 Lucas Vieira.** https://github.com/lucasarieiv \n **👨‍🦱 Samuel Filipe.** https://github.com/Samuel2049 \n **✨ Sinta-se à vontade para contribuir com o Projeto 👍**")
+        case '!contribuidores': 
+            channelMessage("**💾 Link do Repositório Github** https://github.com/Claudio-P/PomodoroBot \n **👨‍🦱 Claudio Pereira.** https://github.com/Claudio-P \n ** **👨‍🦱 Cleby Francisco.** https://github.com/ClebyFrancisco \n ** 👨‍🦰 Gabriel Silva.** https://github.com/gabriel-anjos \n **👨‍🦱 Lucas Vieira.** https://github.com/lucasarieiv \n **👨‍🦱 Samuel Filipe.** https://github.com/Samuel2049 \n **✨ Sinta-se à vontade para contribuir com o Projeto 👍**")
             break;
     }
 });

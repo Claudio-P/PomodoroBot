@@ -66,27 +66,37 @@ client.once('ready', () => {
 client.on('messageCreate', async message => {
     const command = firstCommand(message)
 
+    
+    function channelMessage(text){
+        message.channel.send(text)
+        }
+
+      
+    
+    
     const { voice } = message.member
-
+    
     // if (!voice.channelId) {
-    //     // FIX: SE O USUÁRIO NÃO ESTIVER EM UM CANAL DE VOZ, ELE NÃO IRÁ CONSEGUIR ACIONAR O BOT
-    //     message.reply('🚫 Você deve estar em canal de Voz 🗣️')
-    // } else {
-        
-    // }
-
-    switch (command) {
+        //     // FIX: SE O USUÁRIO NÃO ESTIVER EM UM CANAL DE VOZ, ELE NÃO IRÁ CONSEGUIR ACIONAR O BOT
+        //     message.reply('🚫 Você deve estar em canal de Voz 🗣️')
+        // } else {
+            
+            // }
+            switch (command) {
+                
         case '!start':
             startPomodoro(message)
             break;
         case '!help':
-            message.channel.send("ℹ️ Nossos commandos 👇")
-            message.channel.send("**!start _<cliclos> <minutos dos ciclos> <minuto do descanso>_ Ex: !start _2 1 1_** \n**!contribuidores** - _Informações dos contribuidores e do projeto_")
+            channelMessage("ℹ️ Nossos commandos 👇")
+            channelMessage("**!start _<cliclos> <minutos dos ciclos> <minuto do descanso>_ Ex: !start _2 1 1_** \n**!contribuidores** - _Informações dos contribuidores e do projeto_")
             break;
         case '!contribuidores':
-            message.channel.send("**💾 Link do Repositório Github** https://github.com/Claudio-P/PomodoroBot \n **👨‍🦱 Claudio Pereira.** https://github.com/Claudio-P \n **👨‍🦰 Gabriel Silva.** https://github.com/gabriel-anjos \n **👨‍🦱 Lucas Vieira.** https://github.com/lucasarieiv \n **👨‍🦱 Samuel Filipe.** https://github.com/Samuel2049 \n **✨ Sinta-se à vontade para contribuir com o Projeto 👍**")
+            channelMessage("**💾 Link do Repositório Github** https://github.com/Claudio-P/PomodoroBot \n **👨‍🦱 Claudio Pereira.** https://github.com/Claudio-P \n **👨‍🦰 Gabriel Silva.** https://github.com/gabriel-anjos \n **👨‍🦱 Lucas Vieira.** https://github.com/lucasarieiv \n **👨‍🦱 Samuel Filipe.** https://github.com/Samuel2049 \n **✨ Sinta-se à vontade para contribuir com o Projeto 👍**")
             break;
     }
 });
+
+
 
 client.login(token);

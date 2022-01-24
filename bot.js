@@ -58,7 +58,7 @@ async function startPomodoro(message) {
     message.reply(
       `🍅 **Pomodoro Iniciado. 🕐 ${pomodoroTime}min para finalizar o Ciclo** 🏁`
     );
-    await time(message, parseInt(pomodoroRest));
+    await time(message, parseInt(pomodoroTime));
     muteAllChannel(message, false);
 
     if (i == pomodoroQuantity) break;
@@ -66,7 +66,7 @@ async function startPomodoro(message) {
     message.reply(
       `🍅 **Descanso merecido! Você terá 🕐 ${pomodoroRest}min para descansar** 🥱`
     );
-    await time(message, parseInt(pomodoroTime));
+    await time(message, parseInt(pomodoroRest));
   } while (i < pomodoroQuantity);
 
   message.reply("🎉 **Parabéns!!!** ✨ Você concluiu seu 🍅 **POMODORO** 🔥");

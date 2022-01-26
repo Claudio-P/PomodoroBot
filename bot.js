@@ -30,6 +30,8 @@ function muteAllChannel(message, isMute) {
   voice.channel.members.map((user) => {
     user.voice.setMute(isMute, "");
   });
+  
+  
 }
 
 async function time(message, ms) {

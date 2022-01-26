@@ -29,6 +29,8 @@ function muteAllChannel(message, isMute) {
   voice.channel.members.map((user) => {
     user.voice.setMute(isMute, "");
   });
+  
+  
 }
 
 async function time(message, ms) {
@@ -90,11 +92,15 @@ client.on("messageCreate", async (message) => {
   //     // FIX: SE O USUÁRIO NÃO ESTIVER EM UM CANAL DE VOZ, ELE NÃO IRÁ CONSEGUIR ACIONAR O BOT
   //     message.reply('🚫 Você deve estar em canal de Voz 🗣️')
   // } else {
-
   // }
+
+
+
   switch (command) {
     case "!start":
       startPomodoro(message);
+      message.member.voice.serverMute = true
+      console.log(message.GUILD_MESSAGES)
       break;
     case "!help":
       channelMessage("ℹ️ Nossos commandos 👇");
